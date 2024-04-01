@@ -84,6 +84,7 @@ func (a *api) Exit() {
 
 func GetIntegerQueryParamOrDefault(r *http.Request, queryParam string, maxValue int, defaultValue int) int {
 	value, err := strconv.Atoi(r.URL.Query().Get(queryParam))
+
 	if err != nil || value > maxValue || value <= 0 {
 		value = defaultValue
 	}

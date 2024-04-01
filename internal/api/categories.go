@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/ikiwq/blog-api/internal/domain"
@@ -38,6 +39,7 @@ func (a *api) getAllCategories(w http.ResponseWriter, r *http.Request) {
 	categories, count, err := a.categoryRepository.GetAll(ctx)
 	if err != nil {
 		a.errorResponse(w, r, http.StatusInternalServerError, errors.New("internal server error"))
+		log.Print("Error while retrieving all categories: ", err)
 		return
 	}
 

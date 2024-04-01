@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"sync"
 
@@ -63,7 +64,7 @@ func (p *mysqlArticleRepository) GetByCategory(ctx context.Context, categorySlug
 		)`
 
 	var articles []domain.Article
-	if err := p.db.SelectContext(ctx, &articles, "SELECT * "+baseQuery+" LIMIT ? OFFSET ? ", categorySlug, take, offset); err != nil {
+	if err := p.db.SelectContext(ctx, &articles, fmt.Sprintf("SELECT * %s LIMIT ? OFFSET ? ", baseQuery), categorySlug, take, offset); err != nil {
 		log.Print(err)
 		return nil, 0, err
 	}
@@ -80,11 +81,32 @@ func (p *mysqlArticleRepository) GetByCategory(ctx context.Context, categorySlug
 }
 
 func (p *mysqlArticleRepository) GetAll(ctx context.Context, page int, take int, featured string) ([]domain.Article, int, error) {
+	offset := take * page
+
+	var baseQuery = `FROM articles`
+
+	if featured != "" {
+		baseQuery = fmt.Sprintf("%s WHERE featured = %s", baseQuery, featured)
+	}
+
 	var articles []domain.Article
 
-  // p.db.Where("featured = ?", featured).Offset(page * take).Limit(take).Find(&articles)
+	var articleQuery = fmt.Sprintf("SELECT * %s ORDER BY created_at DESC LIMIT ? OFFSET ?", baseQuery)
 
-	return articles, 0, nil
+	if err := p.db.SelectContext(ctx, &articles, articleQuery, take, offset); err != nil {
+		log.Print(err)
+		return nil, 0, err
+	}
+
+	var count int
+
+	var countQuery = fmt.Sprintf("SELECT COUNT(*) %s", baseQuery)
+	if err := p.db.GetContext(ctx, &count, countQuery); err != nil {
+		log.Print(err)
+		return articles, 0, err
+	}
+
+	return articles, count, nil
 }
 
 func (p *mysqlArticleRepository) populateArticlesCategories(ctx context.Context, articles []domain.Article) {
