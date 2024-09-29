@@ -30,10 +30,18 @@ type api struct {
 }
 
 func WriteJSON(w http.ResponseWriter, status int, v any) error {
-	w.WriteHeader(status)
+	WriteDefaultHeaders(w)
 	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
 
 	return json.NewEncoder(w).Encode(v)
+}
+
+func WriteDefaultHeaders(w http.ResponseWriter) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Cache-Control", "no-cache")
+	w.Header().Set("Connection", "keep-alive")
 }
 
 func NewApi(apiAddress string, apiPort string, connectionString string) *api {
