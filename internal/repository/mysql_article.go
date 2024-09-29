@@ -45,6 +45,8 @@ func (p *mysqlArticleRepository) GetSimilarBySlug(ctx context.Context, slug stri
 		return nil, 0, err
 	}
 
+	p.populateArticlesCategories(ctx, articles)
+
 	return articles, len(articles), nil
 }
 
@@ -105,6 +107,8 @@ func (p *mysqlArticleRepository) GetAll(ctx context.Context, page int, take int,
 		log.Print(err)
 		return articles, 0, err
 	}
+
+	p.populateArticlesCategories(ctx, articles)
 
 	return articles, count, nil
 }
