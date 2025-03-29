@@ -1,8 +1,8 @@
 package com.ikiwq.blog.api.config.provider;
 
 import com.ikiwq.blog.api.model.entity.RefreshToken;
+import com.ikiwq.blog.api.model.exception.AuthExceptionEnum;
 import com.ikiwq.blog.api.model.exception.BlogException;
-import com.ikiwq.blog.api.model.exception.BlogExceptionEnum;
 import com.ikiwq.blog.api.model.security.RefreshAuthenticationToken;
 import com.ikiwq.blog.api.repository.RefreshTokenRepository;
 import com.ikiwq.blog.api.service.SqlUserDetailsService;
@@ -33,7 +33,7 @@ public class RefreshTokenAuthenticationProvider implements AuthenticationProvide
         String token = (String) authentication.getCredentials();
         String[] splitToken = token.split("\\.");
         if(splitToken.length != 2) {
-            throw new BlogException(BlogExceptionEnum.REFRESH_TOKEN_INVALID);
+            throw new BlogException(AuthExceptionEnum.REFRESH_TOKEN_INVALID);
         }
 
         String identifier = splitToken[0];
@@ -41,18 +41,18 @@ public class RefreshTokenAuthenticationProvider implements AuthenticationProvide
 
         Optional<RefreshToken> optRefreshToken = refreshTokenRepository.findById(identifier);
         if(optRefreshToken.isEmpty()) {
-            throw new BlogException(BlogExceptionEnum.REFRESH_TOKEN_INVALID);
+            throw new BlogException(AuthExceptionEnum.REFRESH_TOKEN_INVALID);
         }
 
         RefreshToken refreshToken = optRefreshToken.get();
 
         boolean expired = Instant.now().isAfter(refreshToken.getExpiresAt());
         if(!refreshToken.isEnabled() || expired) {
-            throw new BlogException(BlogExceptionEnum.REFRESH_TOKEN_INVALID);
+            throw new BlogException(AuthExceptionEnum.REFRESH_TOKEN_INVALID);
         }
 
         if(!passwordEncoder.matches(value, refreshToken.getValue())) {
-            throw new BlogException(BlogExceptionEnum.REFRESH_TOKEN_INVALID);
+            throw new BlogException(AuthExceptionEnum.REFRESH_TOKEN_INVALID);
         }
 
         String userId = String.valueOf(refreshToken.getUserId());

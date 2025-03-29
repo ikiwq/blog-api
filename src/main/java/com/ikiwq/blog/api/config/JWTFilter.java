@@ -1,13 +1,13 @@
 package com.ikiwq.blog.api.config;
 
+import com.ikiwq.blog.api.model.exception.AuthExceptionEnum;
+import com.ikiwq.blog.api.model.exception.BlogException;
 import com.ikiwq.blog.api.model.security.JwtAuthenticationToken;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,10 +20,7 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
-    @Value("${auth.jwt.accessTokenCookie}")
-    private final static String accessTokenCookieName = "blog.auth";
-    @Value("${auth.jwt.refreshTokenCookie}")
-    private final static String refreshTokenCookieName = "blog.refresh";
+    private static final String BEARER_PREFIX = "Bearer";
 
     private final AuthenticationManager authenticationManager;
 
@@ -33,27 +30,28 @@ public class JWTFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-        Cookie[] cookies = request.getCookies();
-        Cookie accessTokenCookie = null;
-
-        if(cookies == null) {
+        String authHeader = request.getHeader("Authorization");
+        if(authHeader == null) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        for(Cookie cookie : cookies){
-            if(Objects.equals(cookie.getName(), accessTokenCookieName)){
-                accessTokenCookie = cookie;
-            }
+        String[] splitAuthHeader = authHeader.split(" ");
+        if(splitAuthHeader.length != 2) {
+            throw new BlogException(AuthExceptionEnum.AUTH_TOKEN_INVALID);
         }
 
-        if(accessTokenCookie == null) {
-            filterChain.doFilter(request, response);
-            return;
+        String prefix = splitAuthHeader[0];
+        String token = splitAuthHeader[1];
+
+        // Note: When dealing with multiple auth methods, this should be instead replaced
+        // with a filterChain.doFilter
+        if(!Objects.equals(prefix, BEARER_PREFIX)) {
+            throw new BlogException(AuthExceptionEnum.AUTH_METHOD_NOT_SUPPORTED);
         }
 
         Authentication authentication = authenticationManager.authenticate(
-                new JwtAuthenticationToken(accessTokenCookie.getValue())
+                new JwtAuthenticationToken(token)
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -2,18 +2,15 @@ package com.ikiwq.blog.api.config;
 
 import com.ikiwq.blog.api.config.provider.JwtAuthenticationProvider;
 import com.ikiwq.blog.api.config.provider.RefreshTokenAuthenticationProvider;
+import com.ikiwq.blog.api.config.provider.UsernamePasswordAuthenticationProvider;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.crypto.SecretKey;
 
@@ -23,26 +20,15 @@ import javax.crypto.SecretKey;
 public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(
-            AuthenticationProvider authenticationProvider,
+            UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider,
             JwtAuthenticationProvider jwtAuthenticationProvider,
             RefreshTokenAuthenticationProvider refreshTokenAuthenticationProvider
     ) {
         return new ProviderManager(
-                authenticationProvider,
+                usernamePasswordAuthenticationProvider,
                 jwtAuthenticationProvider,
                 refreshTokenAuthenticationProvider
         );
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider(
-            UserDetailsService userDetailsService,
-            PasswordEncoder passwordEncoder
-    ) {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-        return daoAuthenticationProvider;
     }
 
     @Bean

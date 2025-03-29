@@ -11,6 +11,8 @@ spring:
         dialect:
 
 app:
+  upload-folder:
+  domain:
   admin:
     credentials:
       username:

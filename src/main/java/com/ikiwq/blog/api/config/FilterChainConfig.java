@@ -21,11 +21,13 @@ public class FilterChainConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.GET, "/api/v1/articles/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/**").hasRole("ADMIN")
-                        .requestMatchers("/api/v1/users/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/articles/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/categories/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/files/*").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/*").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/files/*").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/users/*").hasRole("ADMIN")
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(

@@ -37,10 +37,11 @@ public class JWTUtils {
 
         List<GrantedAuthority> grantedAuthorities = extractAuthorities(claims);
 
-       UserDetails userDetails = User.builder()
-               .username(subject)
-               .authorities(grantedAuthorities)
-               .build();
+        UserDetails userDetails = User.builder()
+                .username(subject)
+                .authorities(grantedAuthorities)
+                .password(jwt)
+                .build();
 
         return new JwtAuthenticationToken(jwt, userDetails, grantedAuthorities);
     }

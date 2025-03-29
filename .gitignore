@@ -34,3 +34,6 @@ build/
 
 ### Application Configuration ###
 application-dev.yaml
+
+### Assets ###
+uploads

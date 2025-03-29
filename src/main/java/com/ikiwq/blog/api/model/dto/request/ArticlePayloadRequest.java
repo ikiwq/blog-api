@@ -12,6 +12,8 @@ public class ArticlePayloadRequest {
     private String excerpt;
     private String content;
 
+    private String image;
+
     private String slug;
     private boolean pinned;
 

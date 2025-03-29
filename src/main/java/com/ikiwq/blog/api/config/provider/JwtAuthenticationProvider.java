@@ -1,6 +1,8 @@
 package com.ikiwq.blog.api.config.provider;
 
 import com.ikiwq.blog.api.config.JWTUtils;
+import com.ikiwq.blog.api.model.exception.AuthExceptionEnum;
+import com.ikiwq.blog.api.model.exception.BlogException;
 import com.ikiwq.blog.api.model.security.JwtAuthenticationToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -16,7 +18,12 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String token = (String) authentication.getCredentials();
-        return jwtUtils.parseToken(token);
+
+        try {
+            return jwtUtils.parseToken(token);
+        } catch (Exception e) {
+            throw new BlogException(AuthExceptionEnum.AUTH_TOKEN_INVALID);
+        }
     }
 
     @Override

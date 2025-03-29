@@ -5,8 +5,6 @@ auth:
   jwt:
     accessTokenExpirationTime: 3000
     refreshTokenExpirationTime: 604800
-    accessTokenCookie: blog.auth
-    refreshTokenCookie: blog.refresh
 
 spring:
   profiles:

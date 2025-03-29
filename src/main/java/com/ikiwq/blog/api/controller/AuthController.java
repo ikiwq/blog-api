@@ -5,6 +5,8 @@ import com.ikiwq.blog.api.model.dto.request.RefreshRequest;
 import com.ikiwq.blog.api.model.dto.response.LoginResponse;
 import com.ikiwq.blog.api.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +19,14 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public LoginResponse loginResponse(@RequestBody LoginRequest request) {
-        return authService.login(request);
+    public ResponseEntity<LoginResponse> loginResponse(@RequestBody LoginRequest request) {
+        LoginResponse res = authService.login(request);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PostMapping("/refresh")
-    public LoginResponse refresh(@RequestBody RefreshRequest request) {
-       return authService.refresh(request);
+    public ResponseEntity<LoginResponse> refresh(@RequestBody RefreshRequest request) {
+        LoginResponse res = authService.refresh(request);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

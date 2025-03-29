@@ -12,12 +12,17 @@ public class BlogException extends RuntimeException {
     private final String message;
     private final Map<String, String> additionalInfo = new HashMap<>();
 
-    public BlogException(BlogExceptionEnum exceptionEnum){
+    public BlogException(AuthExceptionEnum exceptionEnum) {
         this.httpStatusCode = HttpStatusCode.valueOf(exceptionEnum.getHttpStatusCode());
         this.message = exceptionEnum.getMessage();
     }
 
-    public BlogException(BlogExceptionEnum exceptionEnum, Map<String, String> additionalInfo){
+    public BlogException(BlogExceptionEnum exceptionEnum) {
+        this.httpStatusCode = HttpStatusCode.valueOf(exceptionEnum.getHttpStatusCode());
+        this.message = exceptionEnum.getMessage();
+    }
+
+    public BlogException(BlogExceptionEnum exceptionEnum, Map<String, String> additionalInfo) {
         this(exceptionEnum);
         this.additionalInfo.putAll(additionalInfo);
     }

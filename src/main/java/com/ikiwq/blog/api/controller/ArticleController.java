@@ -4,6 +4,8 @@ import com.ikiwq.blog.api.model.dto.request.ArticlePayloadRequest;
 import com.ikiwq.blog.api.model.dto.response.ArticleResponse;
 import com.ikiwq.blog.api.service.ArticleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,30 +17,34 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping("/{articleSlug}")
-    public ArticleResponse getArticle(@PathVariable String articleSlug){
-        return articleService.getArticleBySlug(articleSlug);
+    public ResponseEntity<ArticleResponse> getArticle(@PathVariable String articleSlug){
+        ArticleResponse res = articleService.getArticleBySlug(articleSlug);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping("/")
-    public List<ArticleResponse> getArticles(
+    public ResponseEntity<List<ArticleResponse>> getArticles(
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "20") int take,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) Boolean pinned
     ) {
-        return articleService.getArticles(page, take, category, pinned);
+        List<ArticleResponse> res = articleService.getArticles(page, take, category, pinned);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ArticleResponse createArticle(ArticlePayloadRequest request) {
-        return articleService.createArticle(request);
+    public ResponseEntity<ArticleResponse> createArticle(ArticlePayloadRequest request) {
+        ArticleResponse res = articleService.createArticle(request);
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
     @PutMapping("/{articleId}")
-    public ArticleResponse putArticle(
+    public ResponseEntity<ArticleResponse> putArticle(
             @PathVariable long articleId,
             @RequestBody ArticlePayloadRequest request
     ) {
-        return articleService.putArticle(articleId, request);
+        ArticleResponse res = articleService.putArticle(articleId, request);
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 }

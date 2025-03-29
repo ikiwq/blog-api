@@ -1,8 +1,8 @@
 package com.ikiwq.blog.api.service;
 
 import com.ikiwq.blog.api.model.entity.RefreshToken;
+import com.ikiwq.blog.api.model.exception.AuthExceptionEnum;
 import com.ikiwq.blog.api.model.exception.BlogException;
-import com.ikiwq.blog.api.model.exception.BlogExceptionEnum;
 import com.ikiwq.blog.api.model.security.GeneratedToken;
 import com.ikiwq.blog.api.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
@@ -48,11 +48,11 @@ public class RefreshTokenService {
     public void invalidateToken(String token) {
         String[] splitToken = token.split("\\.");
         if(splitToken.length != 2){
-            throw new BlogException(BlogExceptionEnum.REFRESH_TOKEN_INVALID);
+            throw new BlogException(AuthExceptionEnum.REFRESH_TOKEN_INVALID);
         }
 
         RefreshToken refreshToken = refreshTokenRepository.findById(splitToken[0]).orElseThrow(
-                () -> new BlogException(BlogExceptionEnum.REFRESH_TOKEN_INVALID)
+                () -> new BlogException(AuthExceptionEnum.REFRESH_TOKEN_INVALID)
         );
         refreshToken.setEnabled(false);
 

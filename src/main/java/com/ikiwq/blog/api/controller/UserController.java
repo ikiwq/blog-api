@@ -4,6 +4,8 @@ import com.ikiwq.blog.api.model.dto.request.UserPayloadRequest;
 import com.ikiwq.blog.api.model.dto.response.UserResponse;
 import com.ikiwq.blog.api.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/")
-    public UserResponse createUser(@RequestBody UserPayloadRequest creationRequest) {
-        return userService.createUser(creationRequest);
+    public ResponseEntity<UserResponse> createUser(@RequestBody UserPayloadRequest creationRequest) {
+        UserResponse res = userService.createUser(creationRequest);
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 }
