@@ -15,12 +15,14 @@ public class RefreshToken {
     @Id
     private String id;
 
+    @Column(nullable = false)
     private String value;
+    @Column(nullable = false)
     private boolean enabled;
-
+    @Column(name = "expires_at", nullable = false)
     private Instant expiresAt;
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false)
     private long userId;
 
     public RefreshToken(String id, String value, long userId, Instant expiresAt) {
