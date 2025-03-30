@@ -1,4 +1,4 @@
-package com.ikiwq.blog.api.config;
+package com.ikiwq.blog.api.config.jwt;
 
 import com.ikiwq.blog.api.model.exception.AuthExceptionEnum;
 import com.ikiwq.blog.api.model.exception.BlogException;

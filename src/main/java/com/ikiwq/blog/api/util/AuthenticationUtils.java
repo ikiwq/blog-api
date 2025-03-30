@@ -1,8 +1,12 @@
 package com.ikiwq.blog.api.util;
 
+import com.ikiwq.blog.api.model.exception.BlogException;
+import com.ikiwq.blog.api.model.exception.BlogExceptionEnum;
 import io.jsonwebtoken.Claims;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
@@ -29,5 +33,13 @@ public class AuthenticationUtils {
         }
 
         return claims;
+    }
+
+    public static long getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null && authentication.isAuthenticated()) {
+            return (long) authentication.getPrincipal();
+        }
+        throw new BlogException(BlogExceptionEnum.USER_NOT_AUTHENTICATED);
     }
 }

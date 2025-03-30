@@ -22,13 +22,14 @@ public class RefreshToken {
     @Column(name = "expires_at", nullable = false)
     private Instant expiresAt;
 
-    @Column(name = "user_id", nullable = false)
-    private long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private BlogUser user;
 
     public RefreshToken(String id, String value, long userId, Instant expiresAt) {
         this.id = id;
         this.value = value;
-        this.userId = userId;
+        this.user = new BlogUser(userId);
         this.expiresAt = expiresAt;
         this.enabled = true;
     }

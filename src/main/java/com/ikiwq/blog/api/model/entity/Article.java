@@ -38,6 +38,4 @@ public class Article {
 
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
-
-    private Instant publishedAt;
 }

@@ -1,6 +1,6 @@
 package com.ikiwq.blog.api.service;
 
-import com.ikiwq.blog.api.config.JWTUtils;
+import com.ikiwq.blog.api.config.jwt.JWTUtils;
 import com.ikiwq.blog.api.model.dto.request.LoginRequest;
 import com.ikiwq.blog.api.model.dto.request.RefreshRequest;
 import com.ikiwq.blog.api.model.dto.response.LoginResponse;

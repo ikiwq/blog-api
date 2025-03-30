@@ -11,7 +11,7 @@ import java.time.Instant;
 public interface ArticleMapper {
     @Mappings({
         @Mapping(target = "id", ignore = true),
-        @Mapping(target = "pinned", defaultValue = "false"),
+        @Mapping(target = "pinned", source = "pinned", defaultValue = "false"),
         @Mapping(target = "author", ignore = true),
         @Mapping(target = "category", ignore = true),
         @Mapping(target = "createdAt", expression = "java(Instant.now())")
@@ -44,7 +44,6 @@ public interface ArticleMapper {
             @Mapping(target = "author", source = "article.author"),
             @Mapping(target = "category", source = "article.category"),
             @Mapping(target = "createdAt", ignore = true),
-            @Mapping(target = "publishedAt", source = "request.publishedAt")
     })
     Article merge(Article article, ArticlePayloadRequest request);
 }

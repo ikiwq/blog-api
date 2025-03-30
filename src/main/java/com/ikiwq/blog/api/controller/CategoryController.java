@@ -1,7 +1,7 @@
 package com.ikiwq.blog.api.controller;
 
+import com.ikiwq.blog.api.model.dto.request.CategoryPayloadRequest;
 import com.ikiwq.blog.api.model.dto.response.CategoryResponse;
-import com.ikiwq.blog.api.model.dto.request.CategoryCreationRequest;
 import com.ikiwq.blog.api.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,8 +32,17 @@ public class CategoryController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<CategoryResponse> createCategory(CategoryCreationRequest request) {
+    public ResponseEntity<CategoryResponse> createCategory(CategoryPayloadRequest request) {
         CategoryResponse res = categoryService.createCategory(request);
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<CategoryResponse> putCategory(
+            @PathVariable long categoryId,
+            @RequestBody CategoryPayloadRequest request
+    ) {
+        CategoryResponse res = categoryService.putCategory(categoryId, request);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 }

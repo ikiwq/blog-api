@@ -11,7 +11,6 @@ CREATE TABLE IF NOT EXISTS article (
     author_id BIGINT,
     category_id BIGINT,
     created_at TIMESTAMP NOT NULL,
-    published_at TIMESTAMP NOT NULL,
     FOREIGN KEY (author_id) REFERENCES user_data(id),
     FOREIGN KEY (category_id) REFERENCES category(id)
 );

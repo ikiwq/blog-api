@@ -55,7 +55,7 @@ public class RefreshTokenAuthenticationProvider implements AuthenticationProvide
             throw new BlogException(AuthExceptionEnum.REFRESH_TOKEN_INVALID);
         }
 
-        String userId = String.valueOf(refreshToken.getUserId());
+        String userId = String.valueOf(refreshToken.getUser().getId());
         UserDetails userDetails = sqlUserDetailsService.loadUserByUsername(userId);
 
         List<? extends GrantedAuthority> authorities = userDetails.getAuthorities().stream().toList();

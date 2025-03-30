@@ -8,13 +8,17 @@ import lombok.Getter;
 public enum BlogExceptionEnum {
     // User
     USER_USERNAME_ALREADY_TAKEN(400, "A user with this username already exists"),
+    USER_NOT_FOUND(404, "User not found"),
+    USER_NOT_AUTHENTICATED(401, "User is not authenticated"),
 
     // Article
     ARTICLE_SLUG_ALREADY_TAKEN(400, "An article with this slug already exists"),
     ARTICLE_NOT_FOUND(404, "Article not found"),
+    ARTICLE_NOT_CREATED_BY_USER(401, "Article is not created by the currently logged in user"),
 
     // Category
     CATEGORY_NOT_FOUND(404, "Category not found"),
+    CATEGORY_SLUG_ALREADY_TAKEN(400, "A category with this slug already exists"),
 
     // Files
     FILE_EMPTY(400, "File is empty"),

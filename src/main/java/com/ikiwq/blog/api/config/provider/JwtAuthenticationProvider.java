@@ -1,6 +1,6 @@
 package com.ikiwq.blog.api.config.provider;
 
-import com.ikiwq.blog.api.config.JWTUtils;
+import com.ikiwq.blog.api.config.jwt.JWTUtils;
 import com.ikiwq.blog.api.model.exception.AuthExceptionEnum;
 import com.ikiwq.blog.api.model.exception.BlogException;
 import com.ikiwq.blog.api.model.security.JwtAuthenticationToken;

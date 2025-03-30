@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class CategoryCreationRequest {
+public class CategoryPayloadRequest {
     private String name;
     private String description;
 

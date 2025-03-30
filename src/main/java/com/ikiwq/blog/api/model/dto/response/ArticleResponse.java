@@ -10,6 +10,7 @@ import java.time.Instant;
 public class ArticleResponse {
     private long id;
 
+    private String slug;
     private String title;
     private String excerpt;
     private String content;
@@ -18,5 +19,4 @@ public class ArticleResponse {
     private int readingTimeSeconds;
 
     private Instant createdAt;
-    private Instant publishedAt;
 }

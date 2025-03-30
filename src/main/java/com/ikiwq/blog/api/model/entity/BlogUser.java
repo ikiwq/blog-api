@@ -14,6 +14,10 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class BlogUser {
+    public BlogUser(long id){
+        this.id = id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,7 +38,7 @@ public class BlogUser {
     private List<Article> articles;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<RefreshToken> refreshTokens;
 
     @Column(name = "createdAt", updatable = false)

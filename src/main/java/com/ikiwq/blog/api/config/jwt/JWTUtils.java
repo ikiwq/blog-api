@@ -1,4 +1,4 @@
-package com.ikiwq.blog.api.config;
+package com.ikiwq.blog.api.config.jwt;
 
 import com.ikiwq.blog.api.model.security.GeneratedToken;
 import com.ikiwq.blog.api.model.security.JwtAuthenticationToken;

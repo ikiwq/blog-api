@@ -3,8 +3,6 @@ package com.ikiwq.blog.api.model.dto.request;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
-
 @Data
 @NoArgsConstructor
 public class ArticlePayloadRequest {
@@ -18,6 +16,4 @@ public class ArticlePayloadRequest {
     private boolean pinned;
 
     private long categoryId;
-
-    private Instant publishedAt;
 }
