@@ -26,9 +26,6 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
         String username = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
 
-        System.out.println(authentication.getPrincipal());
-        System.out.println(authentication.getCredentials());
-
         UserDetails userDetails;
         try {
             userDetails = sqlUserDetailsService.loadUserByUsername(username);
