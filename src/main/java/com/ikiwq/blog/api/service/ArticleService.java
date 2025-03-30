@@ -33,7 +33,6 @@ public class ArticleService {
     private final CacheManager cacheManager;
 
     private final CategoryService categoryService;
-    private final UserService userService;
 
     private final ArticleRepository articleRepository;
 

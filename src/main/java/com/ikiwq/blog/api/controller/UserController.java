@@ -3,6 +3,7 @@ package com.ikiwq.blog.api.controller;
 import com.ikiwq.blog.api.model.dto.request.UserPayloadRequest;
 import com.ikiwq.blog.api.model.dto.response.UserResponse;
 import com.ikiwq.blog.api.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/")
-    public ResponseEntity<UserResponse> createUser(@RequestBody UserPayloadRequest creationRequest) {
+    public ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserPayloadRequest creationRequest) {
         UserResponse res = userService.createUser(creationRequest);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }

@@ -3,6 +3,7 @@ package com.ikiwq.blog.api.controller;
 import com.ikiwq.blog.api.model.dto.request.ArticlePayloadRequest;
 import com.ikiwq.blog.api.model.dto.response.ArticleResponse;
 import com.ikiwq.blog.api.service.ArticleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class ArticleController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ArticleResponse> createArticle(ArticlePayloadRequest request) {
+    public ResponseEntity<ArticleResponse> createArticle(@RequestBody @Valid ArticlePayloadRequest request) {
         ArticleResponse res = articleService.createArticle(request);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
@@ -42,7 +43,7 @@ public class ArticleController {
     @PutMapping("/{articleId}")
     public ResponseEntity<ArticleResponse> putArticle(
             @PathVariable long articleId,
-            @RequestBody ArticlePayloadRequest request
+            @RequestBody @Valid ArticlePayloadRequest request
     ) {
         ArticleResponse res = articleService.putArticle(articleId, request);
         return new ResponseEntity<>(res, HttpStatus.CREATED);

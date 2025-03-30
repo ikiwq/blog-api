@@ -3,6 +3,7 @@ package com.ikiwq.blog.api.controller;
 import com.ikiwq.blog.api.model.dto.request.CategoryPayloadRequest;
 import com.ikiwq.blog.api.model.dto.response.CategoryResponse;
 import com.ikiwq.blog.api.service.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class CategoryController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<CategoryResponse> createCategory(CategoryPayloadRequest request) {
+    public ResponseEntity<CategoryResponse> createCategory(@RequestBody @Valid CategoryPayloadRequest request) {
         CategoryResponse res = categoryService.createCategory(request);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
@@ -40,7 +41,7 @@ public class CategoryController {
     @PutMapping("/{categoryId}")
     public ResponseEntity<CategoryResponse> putCategory(
             @PathVariable long categoryId,
-            @RequestBody CategoryPayloadRequest request
+            @RequestBody @Valid CategoryPayloadRequest request
     ) {
         CategoryResponse res = categoryService.putCategory(categoryId, request);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
