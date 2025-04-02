@@ -14,15 +14,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set environment variables
-        run: |
-          echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}" >> $GITHUB_ENV
-          echo "ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }}" >> $GITHUB_ENV
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
-          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> $GITHUB_ENV
-          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> $GITHUB_ENV
-          echo "DOMAIN=${{ secrets.DOMAIN }}" >> $GITHUB_ENV
-
       - name: Build Docker image
         run: |
           docker build -t blogapi:latest .
@@ -31,5 +22,11 @@ jobs:
         run: |
           docker stop blogapi-container || true
           docker rm blogapi-container || true
-          docker run -d --name blogapi-container blogapi:latest
-          
+          docker run -d \
+          -e ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}
+          -e ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }}
+          -e DATABASE_URL=${{ secrets.DATABASE_URL }}
+          -e DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
+          -e DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
+          -e DOMAIN=${{ secrets.DOMAIN }}
+          --name blogapi-container blogapi:latest
