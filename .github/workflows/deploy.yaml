@@ -1,6 +1,7 @@
 name: Deploy Blog Api on Docker
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
