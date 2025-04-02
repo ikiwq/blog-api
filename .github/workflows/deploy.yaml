@@ -1,0 +1,24 @@
+name: Deploy Blog Api on Docker
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t blogapi:latest .
+
+      - name: Deploy Docker container
+        run: |
+          docker stop blogapi-container || true
+          docker rm blogapi-container || true
+          docker run -d --name blogapi-container:latest
