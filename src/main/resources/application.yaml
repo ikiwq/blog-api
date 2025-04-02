@@ -8,7 +8,7 @@ auth:
 
 spring:
   profiles:
-    active: dev
+    active: prod
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.xml
     default-schema: blog

@@ -33,7 +33,7 @@ build/
 .vscode/
 
 ### Application Configuration ###
-application-dev.yaml
+application-local.yaml
 
 ### Assets ###
 uploads
