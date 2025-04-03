@@ -27,7 +27,7 @@ jobs:
           -e ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} \
           -e ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }} \
           -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-          -e DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
+          -e DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME}} \
           -e DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
           -e DOMAIN=${{ secrets.DOMAIN }} \
           --name blogapi-container blogapi:latest
