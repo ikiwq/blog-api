@@ -31,4 +31,5 @@ jobs:
           -e DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
           -e DOMAIN=${{ secrets.DOMAIN }} \
           --name blogapi-container \
+          -p 8080:8080 \
           blogapi:latest
