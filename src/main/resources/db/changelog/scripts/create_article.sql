@@ -1,7 +1,7 @@
 --liquibase formatted sql
 --changeset ikiwq:create-user-article-table splitStatements:true endDelimiter:;
 CREATE TABLE IF NOT EXISTS article (
-    id BIGINT PRIMARY KEY,
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
     excerpt TEXT,
     content TEXT,
