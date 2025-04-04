@@ -38,7 +38,8 @@ public class AuthenticationUtils {
     public static long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication != null && authentication.isAuthenticated()) {
-            return (long) authentication.getPrincipal();
+            UserDetails principal = (UserDetails) authentication.getPrincipal();
+            return Long.parseLong(principal.getUsername());
         }
         throw new BlogException(BlogExceptionEnum.USER_NOT_AUTHENTICATED);
     }
