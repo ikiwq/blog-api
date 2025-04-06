@@ -29,8 +29,6 @@ public interface ArticleMapper {
         int wordCount = articleResponse.getContent().length() / 6;
         // Divide by an average of 200 words per minute, or 12.5 words per second
         articleResponse.setReadingTimeSeconds((int) Math.round(wordCount / 12.5));
-
-        articleResponse.setCreatedAt(Instant.now());
     }
 
     @Mappings({

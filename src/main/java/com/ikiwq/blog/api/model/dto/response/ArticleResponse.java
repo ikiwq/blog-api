@@ -18,5 +18,7 @@ public class ArticleResponse {
     private String image;
     private int readingTimeSeconds;
 
+    private boolean pinned;
+
     private Instant createdAt;
 }
