@@ -2,6 +2,7 @@ package com.ikiwq.blog.api.controller;
 
 import com.ikiwq.blog.api.model.dto.response.FileUploadResponse;
 import com.ikiwq.blog.api.service.StorageService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileController {
     private final StorageService storageService;
 
+    @Operation(summary = "Get file by name", description = "Fetch a file using its unique name.")
     @GetMapping("/{filename}")
     public ResponseEntity<Resource> loadFile(@PathVariable String filename) {
         Resource res = storageService.loadByName(filename);
@@ -27,6 +29,7 @@ public class FileController {
                 .body(res);
     }
 
+    @Operation(summary = "Upload file", description = "Upload a file and save it on the server.")
     @PostMapping("/")
     public ResponseEntity<FileUploadResponse> uploadFile(@RequestParam("file") MultipartFile file) {
         FileUploadResponse res = storageService.store(file);

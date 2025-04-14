@@ -25,6 +25,7 @@ public class FilterChainConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/articles/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/files/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .requestMatchers( "/api/v1/auth/**").permitAll()
                         .requestMatchers( "/api/v1/**").hasRole("ADMIN")
                         .requestMatchers( "/api/v1/files/**").hasRole("ADMIN")
